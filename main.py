@@ -3,36 +3,81 @@ POSITIVE = ["yes", "yea", "ye", "sure", "i guess"];
 
 #get input from user
 def ask_for_data():
-    print("what is your name, age, purpose in this world, and your hobby?");
+    print("what is your name, age, and favourite sport?");
     user_input = input();
     return user_input.lower().split(', ');
 
 #gets the users personal information
 while True:
     words = ask_for_data();
-    if len(words) < 3:
+    if len(words) < 2:
         print("some one is witholding information try again");
-        words = ask_for_data();
+        #words = ask_for_data();
     else:
         break;
 
 data = {
     'name':words[0],
     'age':words[1],
-    'purpose':words[2],
-    'hobby':words[3]
+    'sport':words[2]
 }
 
-if int(data['age']) <= 10:
-    print(format("yea i can see that"));
-elif int(data['age']) >= 25:
-    print("someone as old as you should act a bit more mature dont you think?")
-else:
-    print(format("so your{data['age']} hmmm is your humor terrible?"));
-    i = input();
-    if i.lower() in NEGATIVE:
-        print("sure pal");
-    elif i.lower() in POSITIVE:
-        print("yea thats what i expected")
+try:
+    with open(f"{data['name']}.what", "r") as file:
+        print(f"{data['name']}?");
+        ud = file.read().split("'");
+        if int(ud[7]) != int(data['age']):
+            print(f"so your telling me you grew {int(data['age']) - int(ud[7])} years? sure guy");
+            if ud[11] != data['sport']:
+                print("well at least your sports prefrences have ... changed");
+            else:
+                print("and you still feel the same about sports? i see");
+        else:
+            if ud[11] != data['sport']:
+                print("I see your sports prefrences have changed but your age hasn't");
+            else:
+                print("why are you back? you haven't grown at all")
+
+
+
+except:
+
+    if int(data['age']) <= 10:
+        print(format("yea i can see that"));
+    elif int(data['age']) >= 25:
+        print("someone as old as you should act a bit more mature dont you think?")
     else:
-        print("what? ehh whatevere");
+        print(f"so your {data['age']} hmmm is your humor terrible?");
+        i = input();
+        if i.lower() in NEGATIVE:
+            print("sure pal");
+        elif i.lower() in POSITIVE:
+            print("yea thats what i expected")
+        else:
+            print("use your brain pal");
+
+    print("anyways as for you favourite sport");
+    match data['sport']:
+        case "golf":
+            if int(data['age']) >= 50:
+                print(f"wow golf; you really are {data['age']}");
+            else:
+                print(f"why golf you not 50 yet");
+        case "soccer":
+            print("soccer? good luck with that your going to need it if you call it soccer");
+        case "football":
+            print("american football or football football?");
+            i = input();
+            if i == "american" or i == "american football":
+                print("why?")
+            elif i == "real" or i == "football" or i == "football football":
+                print("wow your so different your not like other americans you call soccer football");
+        case "basketball":
+            print("wow basketball hope you got good genetics to play that but i doubt that");
+        case _ :
+            print(f"yea i dont really care about {data['sport']}")
+
+with open(f"{data['name']}.what", "w") as file:
+    file.write(f"{data}")
+
+print("alright get out of here");
