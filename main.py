@@ -7,7 +7,7 @@ def ask_for_data():
     user_input = input();
     return user_input.lower().split(', ');
 
-#gets the users personal information
+#gets the users personal information and checks that age is a valid number
 while True:
     words = ask_for_data();
     if len(words) < 2:
@@ -22,7 +22,7 @@ while True:
 
 
 
-
+#converts data to dictionary
 data = {
     'name':words[0],
     'age':words[1],
@@ -30,10 +30,13 @@ data = {
 }
 
 
-
+#checks if name has been read before
 try:
+    #try open file of user
     with open(f"{data['name']}.what", "r") as file:
         print(f"{data['name']}?");
+
+        #read the file and compare to input data
         ud = file.read().split("'");
         if int(ud[7]) != int(data['age']):
             print(f"so your telling me you grew {int(data['age']) - int(ud[7])} years? sure guy");
@@ -50,7 +53,7 @@ try:
 
 
 except:
-
+    #read and judge input data
     if int(data['age']) <= 10:
         print(f"{data['age']} yea i can see that");
     elif int(data['age']) >= 25:
@@ -84,8 +87,9 @@ except:
         case "basketball":
             print("wow basketball hope you got good genetics to play that but i doubt that");
         case _ :
-            print(f"yea i dont really care about {data['sport']}")
+            print(f"{data['sport']}? ... ok sure")
 
+#save data to file
 with open(f"{data['name']}.what", "w") as file:
     file.write(f"{data}")
 
