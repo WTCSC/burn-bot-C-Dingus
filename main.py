@@ -12,15 +12,24 @@ while True:
     words = ask_for_data();
     if len(words) < 2:
         print("some one is witholding information try again");
-        #words = ask_for_data();
     else:
-        break;
+        try:
+            int(words[1]);
+            break;
+        except:
+            print("age is invalid number")
+        
+
+
+
 
 data = {
     'name':words[0],
     'age':words[1],
     'sport':words[2]
 }
+
+
 
 try:
     with open(f"{data['name']}.what", "r") as file:
@@ -43,18 +52,18 @@ try:
 except:
 
     if int(data['age']) <= 10:
-        print(format("yea i can see that"));
+        print(f"{data['age']} yea i can see that");
     elif int(data['age']) >= 25:
-        print("someone as old as you should act a bit more mature dont you think?")
+        print(f"someone as old as {data['age']} should act a bit more mature dont you think?")
     else:
-        print(f"so your {data['age']} hmmm is your humor terrible?");
+        print(f"so your {data['age']} wow i bet your humor is great");
         i = input();
         if i.lower() in NEGATIVE:
-            print("sure pal");
+            print("yea thats what i thought");
         elif i.lower() in POSITIVE:
-            print("yea thats what i expected")
+            print("sure pal");
         else:
-            print("use your brain pal");
+            print("...");
 
     print("anyways as for you favourite sport");
     match data['sport']:
